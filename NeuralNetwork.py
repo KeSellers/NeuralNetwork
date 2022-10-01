@@ -1,6 +1,6 @@
 
 import numpy as np
-
+import matplotlib.pyplot as plt
 
 from DNN_utils.forward_utils import forward
 from DNN_utils.backward_utils import backward
@@ -51,7 +51,16 @@ class NeuralNetwork():
         accuracy = np.mean(Y_pred==Y)
         print("Accuracy: " + str(accuracy))
 
+    def plot_cost(self):
+        step = self.n_iters//len(self.costs) 
+        plt.plot(np.squeeze(self.costs))
+        plt.ylabel('cost')
+        plt.xlabel('iterations (per ' + str(step) +')')
+        plt.title("Learning rate =" + str(self.lr))
+        plt.show()
+
 model = test_nn(NeuralNetwork)
-save_model(model,"firstmodel")
-nn = load_model("firstmodel")
-print (nn.parameters)
+model.plot_cost()
+#save_model(model,"firstmodel")
+#nn = load_model("firstmodel")
+#print (nn.parameters)
