@@ -1,13 +1,14 @@
 
 import numpy as np
 
+
 from DNN_utils.forward_utils import forward
 from DNN_utils.backward_utils import backward
 from DNN_utils.initialize_utils import initialize_params
 from DNN_utils.cost_utils import compute_cost
 from DNN_utils.update_utils import update
 from Tests.test_model import test_nn
-
+from DNN_utils.general_utils import save_model,load_model
 
 
 def model(X , Y, layer_dims, lr, n_iters, cache_cost=1000,print_cost=False):
@@ -49,4 +50,8 @@ class NeuralNetwork():
         Y_pred = (Y_pred>=0.5) * 1.0
         accuracy = np.mean(Y_pred==Y)
         print("Accuracy: " + str(accuracy))
-test_nn(NeuralNetwork)
+
+model = test_nn(NeuralNetwork)
+save_model(model,"firstmodel")
+nn = load_model("firstmodel")
+print (nn.parameters)

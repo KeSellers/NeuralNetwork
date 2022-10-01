@@ -27,3 +27,4 @@ def test_nn (NeuralNetwork):
     nn.train(train_X,train_Y,print_cost=True)
 
     nn.predict(test_X,test_Y)
+    return nn
