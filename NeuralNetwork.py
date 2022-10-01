@@ -3,7 +3,7 @@ import numpy as np
 from symbol import parameters
 
 
-def initialize_params(self, X , layer_dims):
+def initialize_params(layer_dims):
     #layer_dims [ input_layer, layer1 ,...., layern ]
     #parameters w(n,n-1) b(n-1,1)
     #He - initialization
@@ -105,12 +105,27 @@ def backward (AL, Y, caches):
 
     return grads
 
-def update (parameters, grads, lr):
+def update(parameters, grads, lr):
 
     L = len(parameters) // 2
     for l in range(L):
         parameters["W"+str(l)] -= lr * grads["dW"+str(l)] 
         parameters["b"+str(l)] -= lr * grads["db"+str(l)] 
+
+
+def model(X , Y, layer_dims, lr, n_iters, cache_cost=100,print_cost=False):
+    parameters = initialize_params(layer_dims)
+    costs =[]
+    for i in range(n_iters):
+        A,caches = forward(X,parameters)
+        cost = compute_cost(A,Y)
+        grads = backward(A , Y, caches)
+        parameters = update(parameters, grads, lr)
+
+        if print_cost and i % cache_cost == 0:
+            costs.append(cost)
+            print("Cost after iteration {}: {}".format(i, np.squeeze(cost)))
+
 
 class NeuralNetwork():
     def __init__():
