@@ -54,7 +54,12 @@ def forward(X , parameters):
 
     return AL, caches
 
-
+def compute_cost(A,Y):
+    #cross entropy loss
+    m = Y.shape[1]
+    cost = -np.sum(np.dot(Y,np.log(1-A)) + np.dot(1-Y,np.log(A))) / m
+    cost = np.squeeze(cost)
+    return cost
 
 
 class NeuralNetwork():
