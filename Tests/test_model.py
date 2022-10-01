@@ -1,5 +1,4 @@
 from sklearn.datasets import make_circles
-from NeuralNetwork import model , predict
 import numpy as np
 import matplotlib.pyplot as plt
 def load_dataset():
@@ -15,17 +14,16 @@ def load_dataset():
     test_Y = test_Y.reshape((1, test_Y.shape[0]))
     return train_X, train_Y, test_X, test_Y
 
-train_X, train_Y, test_X, test_Y = load_dataset()
-n_features,n_samples = train_X.shape
-layer_dims=[n_features, 3 , 3, 1]
-lr = 0.1
-n_iters = 10000
-parameters = model(train_X, train_Y, layer_dims,lr,n_iters,print_cost=True)
-y_pred = predict(test_X , parameters)
-p = np.zeros((1,y_pred.shape[1]))
-for i in range(0, y_pred.shape[1]):
-    if y_pred[0,i] > 0.5:
-        p[0,i] = 1
-    else:
-        p[0,i] = 0
-print("Accuracy: "  + str(np.mean((p[0,:] == test_Y[0,:]))))
+
+
+def test_nn (NeuralNetwork):
+    train_X, train_Y, test_X, test_Y = load_dataset()
+    n_features,n_samples = train_X.shape
+    layer_dims=[n_features, 3 , 3, 1]
+    lr = 0.1
+    n_iters = 10000
+    nn = NeuralNetwork(layer_dims,lr,n_iters)
+
+    nn.train(train_X,train_Y,print_cost=True)
+
+    nn.predict(test_X,test_Y)

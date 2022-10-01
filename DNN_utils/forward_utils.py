@@ -1,5 +1,5 @@
 import numpy as np
-from activation_utils import sigmoid,relu
+from .activation_utils import sigmoid,relu
 
 def forward_layer(A , W, b):
     #print(str(W.shape) + "," + str(A.shape) )

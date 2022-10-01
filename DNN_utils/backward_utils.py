@@ -1,5 +1,5 @@
 import numpy as np
-from activation_utils import relu_backward,sigmoid_backward
+from .activation_utils import relu_backward,sigmoid_backward
 
 def backward_layer(dZ ,cache):
 
