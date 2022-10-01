@@ -47,7 +47,7 @@ def sigmoid_backward(Z, cache):
     return Z
 def forward(X , parameters):
 
-    L =  len(parameters) / 2
+    L =  len(parameters) // 2
     A = X
     caches = []
     for l in range(L):
@@ -105,7 +105,12 @@ def backward (AL, Y, caches):
 
     return grads
 
+def update (parameters, grads, lr):
 
+    L = len(parameters) // 2
+    for l in range(L):
+        parameters["W"+str(l)] -= lr * grads["dW"+str(l)] 
+        parameters["b"+str(l)] -= lr * grads["db"+str(l)] 
 
 class NeuralNetwork():
     def __init__():
