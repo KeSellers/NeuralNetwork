@@ -20,8 +20,8 @@ def test_nn (NeuralNetwork):
     train_X, train_Y, test_X, test_Y = load_dataset()
     n_features,n_samples = train_X.shape
     layer_dims=[n_features, 3 , 3, 1]
-    lr = 10
-    n_iters = 10000
+    lr = 0.05
+    n_iters = 20000
     nn = NeuralNetwork(layer_dims,lr,n_iters)
 
     nn.train(train_X,train_Y,print_cost=True)

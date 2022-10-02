@@ -32,5 +32,4 @@ def forward(X , parameters):
       caches.append(cache)
     AL ,cache = forward_activation_layer(A, parameters["W" + str(L)] , parameters["b" + str(L)] , "sigmoid")
     caches.append(cache)
-
     return AL, caches
