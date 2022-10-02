@@ -25,10 +25,10 @@
   </tr>
   <tr>
     <td>Install dependencies: </td>
-    <td>python -m pip install -r requirements.txt</td>
-    <td>python -m pip install -r requirements.txt</td>
-    <td>python -m pip install -r requirements.txt</td>
-    <td>python -m pip install -r requirements.txt</td>
+    <td>python -m pip install -r .\Requirements\requirements.txt</td>
+    <td>python -m pip install -r .\Requirements\requirements.txt</td>
+    <td>python -m pip install -r .\Requirements\requirements.txt</td>
+    <td>python -m pip install -r .\Requirements\requirements.txt</td>
   </tr>
  </table>
     
