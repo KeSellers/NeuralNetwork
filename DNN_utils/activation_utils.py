@@ -15,5 +15,6 @@ def relu_backward(dA,cache):
 def sigmoid_backward(dA, cache):
     Z = cache
     s = 1/(1+np.exp(-Z))
+    # why does scalingfactor dA work? dA *
     dZ = dA * s * (1-s)
     return dZ
