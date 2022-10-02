@@ -1,7 +1,15 @@
 # NeuralNetwork
 
 <b>Set up ur venv:</b>
-  <p> python3 -m venv ./venv/</p>
+<table>
+  <tr> 
+    <th>Start venv<th>
+    <td>python3 -m venv ./venv/</td>
+  </tr>
+ </table>
+    
+  
+  <p> </p>
 <b> Acticate venv</b>
 <p> cmd : venv\Scripts\activate.bat</p>
 <p> PS : venv\Scripts\Activate.ps1</p>
