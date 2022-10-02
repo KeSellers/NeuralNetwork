@@ -28,3 +28,4 @@ def test_nn (NeuralNetwork):
 
     nn.predict(test_X,test_Y)
     return nn
+

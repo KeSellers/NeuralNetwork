@@ -9,6 +9,7 @@ from DNN_utils.cost_utils import compute_cost
 from DNN_utils.update_utils import update
 from Tests.test_model import test_nn
 from DNN_utils.general_utils import save_model,load_model
+from DNN_utils.activation_utils import relu_backward
 
 
 def model(X , Y, layer_dims, lr, n_iters, cache_cost=1000,print_cost=False):
@@ -59,8 +60,8 @@ class NeuralNetwork():
         plt.title("Learning rate =" + str(self.lr))
         plt.show()
 
-model = test_nn(NeuralNetwork)
-model.plot_cost()
+#model = test_nn(NeuralNetwork)
+#model.plot_cost()
 #save_model(model,"firstmodel")
 #nn = load_model("firstmodel")
 #print (nn.parameters)
