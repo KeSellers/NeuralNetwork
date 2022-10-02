@@ -3,7 +3,7 @@
 <b>Set up ur venv:</b>
 <table>
   <tr> 
-    <th>Start venv<th>
+    <th scope="row">Make venv</th>
     <td>python3 -m venv ./venv/</td>
   </tr>
  </table>
