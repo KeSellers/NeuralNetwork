@@ -1,5 +1,5 @@
 # NeuralNetwork
-font_size = 9
+
 <h1>Set up ur project:</h1>
 <table>
   <tr> 
