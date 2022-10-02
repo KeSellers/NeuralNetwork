@@ -1,7 +1,5 @@
 # NeuralNetwork
-@settings {
-  font-size: 10;
-}
+
 <h1>Set up ur project:</h1>
 <table>
   <tr> 
