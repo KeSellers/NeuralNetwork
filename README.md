@@ -1,6 +1,6 @@
 # NeuralNetwork
 
-<b>Set up ur venv:</b>
+<h1>Set up ur project:</h1>
 <table>
   <tr> 
     <th></th>
