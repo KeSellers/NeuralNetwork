@@ -3,7 +3,14 @@
 <b>Set up ur venv:</b>
 <table>
   <tr> 
-    <th scope="row">Make venv</th>
+    <th scope = "col">cmd</th>
+    <th scope = "col">PS</th>
+    <th scope = "col">MacOs</th>
+    <th scope = "col">UNIX</th>
+    <th scope = "row">Make venv</th>
+    <td>python3 -m venv ./venv/</td>
+    <td>python3 -m venv ./venv/</td>
+    <td>python3 -m venv ./venv/</td>
     <td>python3 -m venv ./venv/</td>
   </tr>
  </table>
