@@ -60,8 +60,8 @@ class NeuralNetwork():
         plt.title("Learning rate =" + str(self.lr))
         plt.show()
 
-#model = test_nn(NeuralNetwork)
-#model.plot_cost()
+model = test_nn(NeuralNetwork)
+model.plot_cost()
 #save_model(model,"firstmodel")
 #nn = load_model("firstmodel")
 #print (nn.parameters)
