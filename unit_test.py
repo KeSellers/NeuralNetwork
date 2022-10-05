@@ -105,7 +105,7 @@ class TestBackward(unittest.TestCase):
         W = np.random.rand(dZ.shape[0],A_prev.shape[0])
         b = np.random.rand(dZ.shape[0],1)
         cache = (A_prev, W , b)
-        dA, dW, db = backward_layer(dZ,cache)
+        dA, dW, db = backward_layer(dZ,cache,lambd=0)
         dA_res,dW_res,db_res = backward_testdata()
 
 
