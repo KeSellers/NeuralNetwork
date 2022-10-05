@@ -8,7 +8,7 @@ def sigmoid(Z):
 def relu_backward(dA,cache):
     Z = cache
     dZ = np.array(dA, copy=True) 
-    #dZ = dA * dZ < 0 * 1
+    dZ[Z <= 0] = 0
     return dZ
 def sigmoid_backward(dA, cache):
     Z = cache
