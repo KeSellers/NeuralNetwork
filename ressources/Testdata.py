@@ -28,7 +28,7 @@ def activation_testdata(test):
                             [0. , 0. ],
                             [0.,0.]])
         res1 = 10
-        res2 = -10
+        res2 = 0
         res3 =np.array([[0.02875668, 0.02067684],
                 [0.    ,     0.        ],
                 [0.     ,    0.        ]])
