@@ -42,3 +42,16 @@ def initialize_mini_batches(X, Y, mini_batch_size = 64):
         mini_batches.append(mini_batch)
     
     return mini_batches
+
+def initialize_adam(parameters) :
+    L = len(parameters) // 2 
+    v = {}
+    s = {}
+    for l in range(L):
+
+        v["dW" + str(l + 1)] = np.zeros(parameters["W" + str(l + 1)].shape)
+        v["db" + str(l + 1)] = np.zeros(parameters["b" + str(l + 1)].shape)
+    
+        s["dW" + str(l + 1)] = np.zeros(parameters["W" + str(l + 1)].shape)
+        s["db" + str(l + 1)] = np.zeros(parameters["b" + str(l + 1)].shape)
+    return v, s

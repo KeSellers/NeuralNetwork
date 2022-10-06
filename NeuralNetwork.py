@@ -3,16 +3,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 from DNN_utils.forward_utils import forward
 from DNN_utils.backward_utils import backward
-from DNN_utils.initialize_utils import initialize_params, initialize_mini_batches
+from DNN_utils.initialize_utils import initialize_params, initialize_mini_batches,initialize_adam
 from DNN_utils.cost_utils import compute_cost,L2_Reg
-from DNN_utils.update_utils import update
+from DNN_utils.update_utils import update,update_with_adam
 from Tests.test_model import test_nn
 from DNN_utils.general_utils import save_model,load_model
-from DNN_utils.activation_utils import relu_backward
 
 class NeuralNetwork():
 
-    def __init__(self,layer_dims, lr = 0.01, n_epochs = 1000, lambd=0.07, keep_prob = 1,batch_size = 64):
+    def __init__(self,layer_dims, lr = 0.01, n_epochs = 1000, lambd=0.07,
+         keep_prob = 1,batch_size = 64, optimizer = "gd"):
 
         self.layer_dims=layer_dims
         self.lr=lr
@@ -24,11 +24,13 @@ class NeuralNetwork():
         self.accuracy_dev = None
         self.keep_prob = keep_prob
         self.batch_size = batch_size
+        self.optimizer = optimizer
 
     def train(self,X,Y,cache_cost=1000,print_cost=False):
         
         #Initialize Parameters
         self.parameters = initialize_params(self.layer_dims)
+        v,s = initialize_adam(self.parameters)
         m = X.shape[1]
    
         for i in range(self.n_epochs):
@@ -52,6 +54,12 @@ class NeuralNetwork():
                 grads = backward(AL , mini_batch_Y, caches, self.lambd,self.keep_prob,D)
 
                 #Update Mini-Batch
+                if self.optimizer == "gd":
+                    parameters = update(self.parameters, grads, self.lr)
+                elif self.optimizer == "adam":
+                    t = t + 1 # Adam counter
+                    parameters, v, s = update_with_adam(parameters, grads, v, s,
+                                                        t, self.lr, beta1 = 0.9, beta2 = 0.99,  epsilon = 10e-8)
                 self.parameters = update(self.parameters, grads, self.lr)
 
             cost_avg = cost / m

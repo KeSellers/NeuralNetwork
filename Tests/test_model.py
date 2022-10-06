@@ -21,8 +21,8 @@ def test_nn (NeuralNetwork):
     n_features,n_samples = train_X.shape
     layer_dims=[n_features, 3 , 3, 1]
     lr = 0.1
-    n_epochs = 10000
-    batch_size = n_samples
+    n_epochs = 5000
+    batch_size = 64
     nn = NeuralNetwork(layer_dims,lr,n_epochs,lambd=0.,keep_prob=1,batch_size=batch_size)
 
     nn.train(train_X,train_Y,print_cost=True)
