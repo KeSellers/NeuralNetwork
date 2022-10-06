@@ -10,24 +10,6 @@ from Tests.test_model import test_nn
 from DNN_utils.general_utils import save_model,load_model
 from DNN_utils.activation_utils import relu_backward
 
-
-def model(X , Y, layer_dims, lr, n_iters, cache_cost=1000,print_cost=False):
-    parameters = initialize_params(layer_dims)
-    costs =[]
-    
-    for i in range(n_iters):
-        AL,caches = forward(X,parameters)
-        
-        cost = compute_cost(AL,Y)
-        grads = backward(AL , Y, caches)
-        parameters = update(parameters, grads, lr)
-
-        if print_cost and i % cache_cost == 0:
-            costs.append(cost)
-            print("Cost after iteration {}: {}".format(i, np.squeeze(cost)))
-
-    return parameters
-
 class NeuralNetwork():
 
     def __init__(self,layer_dims, lr = 0.01, n_iters = 1000, lambd=0.07, keep_prob = 1):
