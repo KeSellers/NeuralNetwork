@@ -26,7 +26,7 @@ def backward_activation_layer(dA, cache, activation,lambd):
     dA_prev , dW, db = backward_layer(dZ,linear_cache,lambd)
 
     return dA_prev , dW, db
-def backward (AL, Y, caches,lambd):
+def backward (AL, Y, caches,lambd, keep_prob,D):
     grads = {}
     L = len(caches) # the number of layers -> 
     m = AL.shape[1]
@@ -35,8 +35,11 @@ def backward (AL, Y, caches,lambd):
     dAL = - (np.divide(Y, AL) - np.divide(1 - Y, 1 - AL))
 
     grads["dA"+ str(L-1)],grads["dW"+str(L)],grads["db"+str(L)] = backward_activation_layer(dAL, caches[-1], "sigmoid",lambd)
+    grads["dA"+ str(L-1)] *= D[-1]
+    grads["dA"+ str(L-1)] /= keep_prob
 
     for l in reversed(range(L-1)):
         grads["dA"+ str(l)],grads["dW"+str(l+1)],grads["db"+str(l+1)] = backward_activation_layer(grads["dA" + str(l+1)], caches[l], "relu",lambd)
-
+        grads["dA"+ str(l)] *= D[l]
+        grads["dA"+ str(l)] /= keep_prob
     return grads
