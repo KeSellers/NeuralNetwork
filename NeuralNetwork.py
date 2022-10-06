@@ -12,11 +12,12 @@ from DNN_utils.general_utils import save_model,load_model
 class NeuralNetwork():
 
     def __init__(self,layer_dims, lr = 0.01, n_epochs = 1000, lambd=0.07,
-         keep_prob = 1,batch_size = 64, optimizer = "gd"):
+         keep_prob = 1,batch_size = 64, optimizer = "adam", decay_rate = 0.01):
 
-        self.layer_dims=layer_dims
-        self.lr=lr
-        self.n_epochs=n_epochs
+        self.layer_dims = layer_dims
+        self.lr = lr
+        self.lr_decay = lr
+        self.n_epochs = n_epochs
         self.parameters = None
         self.costs = [] 
         self.lambd = lambd
@@ -25,6 +26,7 @@ class NeuralNetwork():
         self.keep_prob = keep_prob
         self.batch_size = batch_size
         self.optimizer = optimizer
+        self.decay_rate = decay_rate
 
     def train(self,X,Y,cache_cost=1000,print_cost=False):
         
@@ -38,6 +40,11 @@ class NeuralNetwork():
             #Initialize Epoch
             mini_batches = initialize_mini_batches(X, Y, self.batch_size)
             cost = 0
+            t = 0
+            self.lr_decay = 1 / (1 + self.decay_rate * i) * self.lr
+
+            if i % 1000 == 0:
+                print( "Learning Rate after epoch {}: {}".format(i,self.lr_decay))
 
             for mini_batch in mini_batches:
 
@@ -55,12 +62,12 @@ class NeuralNetwork():
 
                 #Update Mini-Batch
                 if self.optimizer == "gd":
-                    parameters = update(self.parameters, grads, self.lr)
+                    self.parameters = update(self.parameters, grads, self.lr_decay)
                 elif self.optimizer == "adam":
                     t = t + 1 # Adam counter
-                    parameters, v, s = update_with_adam(parameters, grads, v, s,
-                                                        t, self.lr, beta1 = 0.9, beta2 = 0.99,  epsilon = 10e-8)
-                self.parameters = update(self.parameters, grads, self.lr)
+                    self.parameters, v, s = update_with_adam(self.parameters, grads, v, s,
+                                                        t, self.lr_decay, beta1 = 0.9, beta2 = 0.99,  epsilon = 10e-8)
+
 
             cost_avg = cost / m
             if print_cost and i % cache_cost == 0:
