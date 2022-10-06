@@ -20,16 +20,33 @@ def forward_activation_layer(A_prev, W, b, activation="relu"):
     cache = (linear_cache, activation_cache)
 
     return A, cache
-def forward(X , parameters):
+def forward(X , parameters , keep_prob):
 
     L =  len(parameters) // 2
 
     A = X
     caches = []
+    Ds =[]
+    D = np.random.rand(X.shape[0],X.shape[1]) < keep_prob 
+    #A = A * D
+    #A = A / keep_prob
+    Ds.append(D)
     for l in range(1,L):
       A_prev = A
+
+     #Dropout Reg
+
       A ,cache =  forward_activation_layer(A_prev, parameters["W" + str(l)] , parameters["b" + str(l)] , "relu")
+      D = np.random.rand(A.shape[0],A.shape[1]) < keep_prob 
+      A = A * D
+      A = A / keep_prob
+      Ds.append(D)
+
+
+      cache = cache   
       caches.append(cache)
+
     AL ,cache = forward_activation_layer(A, parameters["W" + str(L)] , parameters["b" + str(L)] , "sigmoid")
+    Ds.append(np.ones((A.shape[0],A.shape[1])))
     caches.append(cache)
-    return AL, caches
+    return AL, caches ,Ds
