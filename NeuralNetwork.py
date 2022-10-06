@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 from DNN_utils.forward_utils import forward
 from DNN_utils.backward_utils import backward
-from DNN_utils.initialize_utils import initialize_params
+from DNN_utils.initialize_utils import initialize_params, initialize_mini_batches
 from DNN_utils.cost_utils import compute_cost
 from DNN_utils.update_utils import update
 from Tests.test_model import test_nn
@@ -15,6 +15,7 @@ from DNN_utils.activation_utils import relu_backward
 def model(X , Y, layer_dims, lr, n_iters, cache_cost=1000,print_cost=False):
     parameters = initialize_params(layer_dims)
     costs =[]
+    
     for i in range(n_iters):
         AL,caches = forward(X,parameters)
         
@@ -29,7 +30,7 @@ def model(X , Y, layer_dims, lr, n_iters, cache_cost=1000,print_cost=False):
     return parameters
 
 class NeuralNetwork():
-    def __init__(self,layer_dims, lr, n_iters):
+    def __init__(self,layer_dims, lr, n_iters,):
         self.layer_dims=layer_dims
         self.lr=lr
         self.n_iters=n_iters
