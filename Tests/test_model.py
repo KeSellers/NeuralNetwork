@@ -3,9 +3,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 def load_dataset():
     np.random.seed(1)
-    train_X, train_Y = make_circles(n_samples=3000, noise=.05)
+    train_X, train_Y = make_circles(n_samples=300, noise=.05)
     np.random.seed(2)
-    test_X, test_Y = make_circles(n_samples=1000, noise=.05)
+    test_X, test_Y = make_circles(n_samples=100, noise=.05)
     # Visualize the data
     #plt.scatter(train_X[:, 0], train_X[:, 1], c=train_Y, s=40, cmap=plt.cm.Spectral)
     train_X = train_X.T
@@ -21,8 +21,9 @@ def test_nn (NeuralNetwork):
     n_features,n_samples = train_X.shape
     layer_dims=[n_features, 3 , 3, 1]
     lr = 0.1
-    n_iters = 10000
-    nn = NeuralNetwork(layer_dims,lr,n_iters,lambd=0.,keep_prob=1)
+    n_epochs = 10000
+    batch_size = n_samples
+    nn = NeuralNetwork(layer_dims,lr,n_epochs,lambd=0.,keep_prob=1,batch_size=batch_size)
 
     nn.train(train_X,train_Y,print_cost=True)
 

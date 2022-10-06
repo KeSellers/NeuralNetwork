@@ -12,33 +12,52 @@ from DNN_utils.activation_utils import relu_backward
 
 class NeuralNetwork():
 
-    def __init__(self,layer_dims, lr = 0.01, n_iters = 1000, lambd=0.07, keep_prob = 1):
+    def __init__(self,layer_dims, lr = 0.01, n_epochs = 1000, lambd=0.07, keep_prob = 1,batch_size = 64):
 
         self.layer_dims=layer_dims
         self.lr=lr
-        self.n_iters=n_iters
+        self.n_epochs=n_epochs
         self.parameters = None
         self.costs = [] 
         self.lambd = lambd
         self.accuracy_train = None
         self.accuracy_dev = None
         self.keep_prob = keep_prob
+        self.batch_size = batch_size
 
     def train(self,X,Y,cache_cost=1000,print_cost=False):
-
+        
+        #Initialize Parameters
         self.parameters = initialize_params(self.layer_dims)
+        m = X.shape[1]
+   
+        for i in range(self.n_epochs):
+            
+            #Initialize Epoch
+            mini_batches = initialize_mini_batches(X, Y, self.batch_size)
+            cost = 0
 
-        for i in range(self.n_iters):
+            for mini_batch in mini_batches:
 
-            AL,caches,D = forward(X,self.parameters,self.keep_prob)
-            cost = compute_cost(AL,Y)
-            cost += L2_Reg(self.parameters,self.lambd)
-            grads = backward(AL , Y, caches, self.lambd,self.keep_prob,D)
-            self.parameters = update(self.parameters, grads, self.lr)
+                mini_batch_X,mini_batch_Y = mini_batch
+                
+                #Forward Mini-Batch
+                AL,caches,D = forward(mini_batch_X,self.parameters,self.keep_prob)
 
+                #Calculate Cost
+                cost += compute_cost(AL,mini_batch_Y)
+                cost += L2_Reg(self.parameters,self.lambd)
+
+                #Backward Mini-Batch
+                grads = backward(AL , mini_batch_Y, caches, self.lambd,self.keep_prob,D)
+
+                #Update Mini-Batch
+                self.parameters = update(self.parameters, grads, self.lr)
+
+            cost_avg = cost / m
             if print_cost and i % cache_cost == 0:
-                self.costs.append(cost)
-                print("Cost after iteration {}: {}".format(i, np.squeeze(cost)))
+                self.costs.append(cost_avg)
+                print("Cost after epoch {}: {}".format(i, np.squeeze(cost_avg)))
 
         Y_pred,_,_ = forward(X,self.parameters,self.keep_prob)
         self.accuracy_train = self.calc_accuracy(Y_pred,Y)
@@ -52,7 +71,7 @@ class NeuralNetwork():
         return np.mean(Y_pred==Y)
 
     def plot_cost(self):
-        step = self.n_iters//len(self.costs) 
+        step = self.n_epochs//len(self.costs) 
         plt.plot(np.squeeze(self.costs))
         plt.ylabel('cost')
         plt.xlabel('iterations (per ' + str(step) +')')
