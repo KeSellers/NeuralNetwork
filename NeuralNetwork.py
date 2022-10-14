@@ -8,7 +8,7 @@ from DNN_utils.cost_utils import compute_cost,L2_Reg
 from DNN_utils.update_utils import update,update_with_adam
 from Tests.test_model import test_nn
 from DNN_utils.general_utils import save_model,load_model
-
+from tuning_hyperparameter import hyperparameter_tuning
 class NeuralNetwork():
 
     def __init__(self,layer_dims, lr = 0.01, n_epochs = 1000, lambd=0.07,
@@ -43,8 +43,8 @@ class NeuralNetwork():
             t = 0
             self.lr_decay = 1 / (1 + self.decay_rate * i) * self.lr
 
-            if i % 1000 == 0:
-                print( "Learning Rate after epoch {}: {}".format(i,self.lr_decay))
+            #if i % 1000 == 0:
+            #    print( "Learning Rate after epoch {}: {}".format(i,self.lr_decay))
 
             for mini_batch in mini_batches:
 
@@ -70,32 +70,40 @@ class NeuralNetwork():
 
 
             cost_avg = cost / m
-            if print_cost and i % cache_cost == 0:
-                self.costs.append(cost_avg)
-                print("Cost after epoch {}: {}".format(i, np.squeeze(cost_avg)))
+#            if print_cost and i % cache_cost == 0:
+#                self.costs.append(cost_avg)
+#                print("Cost after epoch {}: {}".format(i, np.squeeze(cost_avg)))
 
         Y_pred,_,_ = forward(X,self.parameters,self.keep_prob)
         self.accuracy_train = self.calc_accuracy(Y_pred,Y)
-        print("Train-Accuracy: " + str(self.accuracy_train))
+        return  self.accuracy_train
+        #print("Train-Accuracy: " + str(self.accuracy_train))
     def predict(self,X,Y):
+
         Y_pred, _, _ = forward(X,self.parameters,keep_prob=1) 
         self.accuracy_dev = self.calc_accuracy(Y_pred,Y)
-        print("Dev-Accuracy: " + str(self.accuracy_dev))
+        #print("Dev-Accuracy: " + str(self.accuracy_dev))
+        return self.accuracy_dev
+
     def calc_accuracy(self,Y_pred,Y):
+
         Y_pred = (Y_pred>=0.5) * 1.0
         return np.mean(Y_pred==Y)
 
     def plot_cost(self):
+
         step = self.n_epochs//len(self.costs) 
         plt.plot(np.squeeze(self.costs))
         plt.ylabel('cost')
         plt.xlabel('iterations (per ' + str(step) +')')
         plt.title("Learning rate =" + str(self.lr))
         plt.show()
-model = test_nn(NeuralNetwork)
-model.plot_cost()
+
+#model = test_nn(NeuralNetwork)
+#model.plot_cost()
 #save_model(model,"reg+dropout")
 #nn = load_model("without_reg")
 #print (nn.lambd)
 #nn.plot_cost()
 
+model = hyperparameter_tuning(NeuralNetwork)

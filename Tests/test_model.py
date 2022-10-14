@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 from DNN_utils.forward_utils import forward
 def load_dataset():
     np.random.seed(1)
-    train_X, train_Y = make_circles(n_samples=300, noise=.05)
+    train_X, train_Y = make_circles(n_samples=600, noise=.05)
     np.random.seed(2)
-    test_X, test_Y = make_circles(n_samples=100, noise=.05)
+    test_X, test_Y = make_circles(n_samples=200, noise=.05)
     # Visualize the data
     #plt.scatter(train_X[:, 0], train_X[:, 1], c=train_Y, s=40, cmap=plt.cm.Spectral)
     train_X = train_X.T
